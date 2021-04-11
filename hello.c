@@ -1,6 +1,6 @@
 #include <stdio.h>
 
 int main() {
-   printf("Hello, Golden Rams!");
+   printf("Hello, Fall 2021!");
    return 0;
 }
