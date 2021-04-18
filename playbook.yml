@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: 155.98.38.244
   tasks:
   - name: Deploy the service
     k8s:
