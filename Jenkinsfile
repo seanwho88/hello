@@ -1,12 +1,15 @@
 pipeline {
   agent {
     kubernetes {
-      inheritFrom 'jenkins-agent'
       yaml '''
       spec:
-        containers:
-        - name: gcc
-          image: registry:5000/gcc:latest
+      containers:
+      - name: gcc
+        image: registry:5000/gcc:latest
+        command:
+        - sleep
+        args:
+        - 99d
       '''
     }
   }
