@@ -1,21 +1,8 @@
 pipeline {
   agent {
-    kubernetes {
-      yaml '''
-        apiVersion: v1
-        kind: Pod
-        metadata:
-          labels: 
-            name: gcc
-        spec:
-          containers:
-          - name: gcc
-            image: registry:5000/gcc:latest
-            command:
-            - cat
-        '''
-    }
+    kubernetes 
   }
+  
   stages {
     stage('Build') {
       steps {
