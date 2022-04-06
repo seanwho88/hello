@@ -7,14 +7,22 @@ pipeline {
         metadata:
           name: gcc-agent
           labels:
-            app: gcc
+            role: app
         spec:
-          containers:
-          - name: gcc
-            image: registry:5000/gcc:latest
-            command:
-            - cat
-            tty: true
+          selector:
+            matchLabels:
+            role: app
+          template:
+            metadata:
+              labels:
+              role: app
+            spec:
+              containers:
+              - name: gcc
+              image: registry:5000/gcc:latest
+              command:
+              - cat
+              tty: true
         '''
     } 
   }
