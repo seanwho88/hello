@@ -5,7 +5,7 @@ pipeline {
         apiVersion: v1
         kind: Pod
         metadata:
-          name: gcc-agent
+          name: gcc
           labels:
             app: gcc
             role: compiler
