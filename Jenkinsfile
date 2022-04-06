@@ -1,16 +1,7 @@
 pipeline {
   agent {
     kubernetes {
-      yaml '''
-      spec:
-      containers:
-      - name: gcc
-        image: registry:5000/gcc:latest
-        command:
-        - sleep
-        args:
-        - 99d
-      '''
+      inheritFrom 'jenkins-agent'
     }
   }
   stages {
