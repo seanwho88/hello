@@ -8,7 +8,6 @@ pipeline {
     stage('Build') {
       steps {
         container('gcc') {
-          sh 'make clean'
           sh 'make hello'
         }
       }
