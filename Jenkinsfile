@@ -6,8 +6,6 @@ pipeline {
         kind: Pod
         metadata:
           name: gcc
-          labels:
-            app: gcc
         spec:
           containers:
           - name: gcc
