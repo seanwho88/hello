@@ -8,7 +8,6 @@ pipeline {
           name: gcc
           labels:
             app: gcc
-            role: compiler
         spec:
           containers:
           - name: gcc
