@@ -7,6 +7,7 @@ pipeline {
         metadata:
           name: gcc-agent
           labels:
+            app: gcc
             role: compiler
         spec:
           containers:
