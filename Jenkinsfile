@@ -1,32 +1,5 @@
 pipeline {
-  agent {  
-    kubernetes {
-      yaml '''
-        apiVersion: v1
-        kind: Pod
-        metadata:
-          name: gcc-agent
-          labels:
-            role: app
-        spec:
-          selector:
-            matchLabels:
-            role: app
-          template:
-            metadata:
-              labels:
-              role: app
-            spec:
-              containers:
-              - name: gcc
-              image: registry:5000/gcc:latest
-              command:
-              - cat
-              tty: true
-        '''
-    } 
-  }
- 
+  agent any
   stages {
     stage('Build') {
       steps {
