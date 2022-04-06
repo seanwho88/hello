@@ -1,5 +1,15 @@
 pipeline {
-  agent kubernetes
+  agent {
+    kubernetes {
+      inheritFrom 'jenkins-agent'
+      yaml '''
+      spec:
+        containers:
+        - name: gcc
+          image: registry:5000/gcc:latest
+      '''
+    }
+  }
   stages {
     stage('Build') {
       steps {
