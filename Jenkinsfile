@@ -5,7 +5,8 @@ pipeline {
         apiVersion: v1
         kind: Pod
         metadata:
-          name: gcc
+          labels: 
+            name: gcc
         spec:
           containers:
           - name: gcc
