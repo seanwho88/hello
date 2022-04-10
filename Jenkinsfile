@@ -58,6 +58,9 @@ pipeline {
             }
         }
         stage ('Deploy') {
+            agent node {
+            
+            }
             steps {
                 script{
                     def image_id = registry + ":$BUILD_NUMBER"
