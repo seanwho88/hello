@@ -61,7 +61,7 @@ pipeline {
             steps {
                 script{
                     def image_id = registry + ":$BUILD_NUMBER"
-                    sh "export IMAGE=${image_id}; envsubst < ${WORKSPACE}/deployment.yml | kubectl apply -n jenkins -f -"
+                    sh "export IMAGE=${image_id}; envsubst < deployment.yml | kubectl apply -n jenkins -f -"
                     sh "kubectl -f service.yml -n jenkins"
                 }
             }
