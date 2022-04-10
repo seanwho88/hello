@@ -10,11 +10,6 @@ pipeline {
     }
     stages {
         stage('Build') {
-            agent {
-                kubernetes {
-                    inheritFrom 'agent-template'
-                }
-            }
             steps {
                 container('golang') {
                     // Create our project directory.
@@ -28,11 +23,6 @@ pipeline {
             }     
         }
         stage('Test') {
-            agent {
-                kubernetes {
-                    inheritFrom 'agent-template'
-                }
-            }
             steps {
                 container('golang') {                 
                     // Create our project directory.
@@ -48,11 +38,8 @@ pipeline {
             }
         }
         stage('Publish') {
-            environment {
-                registryCredential = 'dockerhub'
-            }
             steps{
-                script {
+                container('docker') {
                     def appimage = docker.build registry + ":$BUILD_NUMBER"
                     docker.withRegistry( '', registryCredential ) {
                         appimage.push()
