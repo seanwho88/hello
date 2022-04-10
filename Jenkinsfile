@@ -1,15 +1,16 @@
 pipeline {
-    agent {
-        kubernetes {
-            inheritFrom 'agent-template'
-        }
-    } 
+    agent none 
     environment {
         registry = "linhbngo/go_server"
         GOCACHE = "/tmp"
     }
     stages {
         stage('Build') {
+            agent {
+                kubernetes {
+                    inheritFrom 'agent-template'
+                }
+            }
             steps {
                 container('golang') {
                     // Create our project directory.
@@ -23,6 +24,11 @@ pipeline {
             }     
         }
         stage('Test') {
+            agent {
+                kubernetes {
+                    inheritFrom 'agent-template'
+                }
+            }
             steps {
                 container('golang') {                 
                     // Create our project directory.
@@ -38,6 +44,11 @@ pipeline {
             }
         }
         stage('Publish') {
+            agent {
+                kubernetes {
+                    inheritFrom 'agent-template'
+                }
+            }
             steps{
                 container('docker') {
                     sh 'echo $DOCKER_TOKEN | docker login --username $DOCKER_USER --password-stdin'
