@@ -1,42 +1,46 @@
 pipeline {
-    agent any
+    agent any 
     environment {
         registry = "linhbngo/go_server"
         GOCACHE = "/tmp"
     }
     stages {
         stage('Build') {
-            agent { 
-                docker { 
-                    image 'golang' 
+            agent {
+                kubernetes {
+                    inheritFrom 'agent-template'
                 }
             }
             steps {
-                // Create our project directory.
-                sh 'cd ${GOPATH}/src'
-                sh 'mkdir -p ${GOPATH}/src/hello-world'
-                // Copy all files in our Jenkins workspace to our project directory.                
-                sh 'cp -r ${WORKSPACE}/* ${GOPATH}/src/hello-world'
-                // Build the app.
-                sh 'export GO111MODULE=auto; go build'               
+                container('golang') {
+                    // Create our project directory.
+                    sh 'cd ${GOPATH}/src'
+                    sh 'mkdir -p ${GOPATH}/src/hello-world'
+                    // Copy all files in our Jenkins workspace to our project directory.                
+                    sh 'cp -r ${WORKSPACE}/* ${GOPATH}/src/hello-world'
+                    // Build the app.
+                    sh 'export GO111MODULE=auto; go build'  
+                }
             }     
         }
         stage('Test') {
-            agent { 
-                docker { 
-                    image 'golang' 
+            agent {
+                kubernetes {
+                    inheritFrom 'agent-template'
                 }
             }
-            steps {                 
-                // Create our project directory.
-                sh 'cd ${GOPATH}/src'
-                sh 'mkdir -p ${GOPATH}/src/hello-world'
-                // Copy all files in our Jenkins workspace to our project directory.                
-                sh 'cp -r ${WORKSPACE}/* ${GOPATH}/src/hello-world'
-                // Remove cached test results.
-                sh 'go clean -cache'
-                // Run Unit Tests.
-                sh 'export GO111MODULE=auto; go test ./... -v -short'            
+            steps {
+                container('golang') {                 
+                    // Create our project directory.
+                    sh 'cd ${GOPATH}/src'
+                    sh 'mkdir -p ${GOPATH}/src/hello-world'
+                    // Copy all files in our Jenkins workspace to our project directory.                
+                    sh 'cp -r ${WORKSPACE}/* ${GOPATH}/src/hello-world'
+                    // Remove cached test results.
+                    sh 'go clean -cache'
+                    // Run Unit Tests.
+                    sh 'export GO111MODULE=auto; go test ./... -v -short'            
+                }
             }
         }
         stage('Publish') {
@@ -57,7 +61,8 @@ pipeline {
             steps {
                 script{
                     def image_id = registry + ":$BUILD_NUMBER"
-                    sh "ansible-playbook  playbook.yml --extra-vars \"image_id=${image_id}\""
+                    sh "export IMAGE=${image+id}; envsubst < deployment.yaml | kubectl apply -n jenkins -f -"
+                    sh "kubectl -f service.yml -n jenkins"
                 }
             }
         }
