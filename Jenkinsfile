@@ -1,5 +1,9 @@
 pipeline {
-    agent any 
+    agent {
+        kubernetes {
+            inheritFrom 'agent-template'
+        }
+    } 
     environment {
         registry = "linhbngo/go_server"
         GOCACHE = "/tmp"
