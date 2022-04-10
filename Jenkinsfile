@@ -58,8 +58,8 @@ pipeline {
             }
         }
         stage ('Deploy') {
-            agent node {
-            
+            agent { 
+                label 'deploy' 
             }
             steps {
                 script{
