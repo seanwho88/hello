@@ -40,11 +40,9 @@ pipeline {
         stage('Publish') {
             steps{
                 container('docker') {
-                    def appimage = docker.build registry + ":$BUILD_NUMBER"
-                    docker.withRegistry( '', registryCredential ) {
-                        appimage.push()
-                        appimage.push('latest')
-                    }
+                    sh 'echo $DOCKER_TOKEN | docker login --username $DOCKER_USER --password-stdin'
+                    sh 'docker build -t $DOCKER_REGISTRY:$BUILD_NUMBER .'
+                    sh 'docker push $DOCKER_REGISTRY:$BUILD_NUMBER'
                 }
             }
         }
