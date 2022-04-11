@@ -66,7 +66,8 @@ pipeline {
             steps {
                 container('kube-agent') {
                     sh 'mkdir $HOME/.kube'
-                    sh 'cp /etc/kubernetes/admin.conf $/.kube/config'
+                    sh 'cp -R /tmp/kubernetes $/etc/'
+                    sh 'cp /etc/kubernetes/admin.conf $HOME/.kube/config'
                     sh 'export IMAGE=$DOCKER_REGISTRY'
                     sh 'envsubst < deployment.yml | kubectl apply -n jenkins -f -'
                     sh 'kubectl -f service.yml -n jenkins'
