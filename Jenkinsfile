@@ -1,7 +1,7 @@
 pipeline {
     agent none 
     environment {
-        registry = "linhbngo/go_server"
+        registry = "linhbngo\/go_server"
         GOCACHE = "/tmp"
     }
     stages {
