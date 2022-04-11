@@ -65,7 +65,7 @@ pipeline {
             }
             steps {
                 sshagent(['cloudlab']) {
-                    sh 'scp -r -o StrictHostKeyChecking=no *.yaml lngo@155.98.37.91:~/'
+                    sh 'scp -r -v -o StrictHostKeyChecking=no *.yml lngo@155.98.37.91:~/'
                     sh 'ssh -o StrictHostKeyChecking=no lngo@155.98.37.91 kubectl apply -f ~/deployment.yml -n jenkins'
                     sh 'ssh -o StrictHostKeyChecking=no lngo@155.98.37.91 kubectl apply -f ~/service.yml -n jenkins'                                        
                 }
