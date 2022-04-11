@@ -65,8 +65,8 @@ pipeline {
             }
             steps {
                 container('docker') {
-                    sh "export IMAGE=${DOCKER_REGISTRY}; envsubst < deployment.yml | kubectl apply -n jenkins -f -"
-                    sh "kubectl -f service.yml -n jenkins"
+                    sh 'export IMAGE=$DOCKER_REGISTRY; envsubst < deployment.yml | kubectl apply -n jenkins -f -'
+                    sh 'kubectl -f service.yml -n jenkins'
                 }
             }
         }
