@@ -66,6 +66,7 @@ pipeline {
             steps {
                 script {
                     sh 'ls /'
+                    sh 'hostname'
                     sh 'which kubectl'
                     sh 'cp /etc/kubernetes/admin.conf $HOME/.kube/config'
                     sh 'export IMAGE=$DOCKER_REGISTRY'
