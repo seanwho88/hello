@@ -65,8 +65,8 @@ pipeline {
             }
             steps {
                 sshagent(credentials: ['cloudlab']) {
-                    sh 'sed -i "s/REGISTRY/$registry/g" deployment.yml'
-                    sh 'sed -i "s/BUILD_NUMBER/$BUILD_NUMBER/g" deployment.yml'
+                    sh 'sed -i \"s/REGISTRY/$registry/g\" deployment.yml'
+                    sh 'sed -i \"s/BUILD_NUMBER/$BUILD_NUMBER/g\" deployment.yml'
                     sh 'scp -r -v -o StrictHostKeyChecking=no *.yml lngo@155.98.37.91:~/'
                     sh 'ssh -o StrictHostKeyChecking=no lngo@155.98.37.91 kubectl apply -f /users/lngo/deployment.yml -n jenkins'
                     sh 'ssh -o StrictHostKeyChecking=no lngo@155.98.37.91 kubectl apply -f /users/lngo/service.yml -n jenkins'                                        
