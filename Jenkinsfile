@@ -58,13 +58,14 @@ pipeline {
             }
         }
         stage ('Deploy') {
-            agent { 
-                label 'deploy' 
+            agent {
+                kubernetes {
+                    inheritFrom 'agent-template'
+                }
             }
             steps {
-                script{
-                    def image_id = registry + ":$BUILD_NUMBER"
-                    sh "export IMAGE=${image_id}; envsubst < deployment.yml | kubectl apply -n jenkins -f -"
+                container('kubernetes') {
+                    sh "export IMAGE=${DOCKER_REGISTRY}; envsubst < deployment.yml | kubectl apply -n jenkins -f -"
                     sh "kubectl -f service.yml -n jenkins"
                 }
             }
