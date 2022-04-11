@@ -64,7 +64,7 @@ pipeline {
                 }
             }
             steps {
-                container('kubernetes') {
+                container('kube-agent') {
                     sh 'mkdir $HOME/.kube'
                     sh 'cp /etc/kubernetes/admin.conf $/.kube/config'
                     sh 'export IMAGE=$DOCKER_REGISTRY'
