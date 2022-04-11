@@ -58,20 +58,13 @@ pipeline {
             }
         }
         stage ('Deploy') {
-            agent {
-                node {
-                    label 'deploy'
-                }
-            }
             steps {
-                script {
-                    sh 'ls /'
-                    sh 'hostname'
-                    sh 'which kubectl'
-                    sh 'cp /etc/kubernetes/admin.conf $HOME/.kube/config'
-                    sh 'export IMAGE=$DOCKER_REGISTRY'
-                    sh 'envsubst < deployment.yml | kubectl apply -n jenkins -f -'
-                    sh 'kubectl -f service.yml -n jenkins'
+                steps {
+                    sshagent(['cloudlab']) {
+                        sh 'scp -r -o StrictHostKeyChecking=no *.yaml lngo@http://155.98.37.91:~/'
+                        sh 'ssh -o StrictHostKeyChecking=no lngo@http://155.98.37.91 kubectl apply -f ~/deployment.yml -n jenkins'
+                        sh 'ssh -o StrictHostKeyChecking=no lngo@http://155.98.37.91 kubectl apply -f ~/service.yml -n jenkins'
+                    }
                 }
             }
         }
