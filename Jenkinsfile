@@ -59,14 +59,14 @@ pipeline {
         }
         stage ('Deploy') {
             agent {
-                kubernetes {
-                    inheritFrom 'agent-template'
+                node {
+                    label 'deploy'
                 }
             }
             steps {
-                container('kube-agent') {
-                    sh 'mkdir $HOME/.kube'
-                    sh 'cp -R /tmp/kubernetes $/etc/'
+                script {
+                    sh 'ls /'
+                    sh 'which kubectl'
                     sh 'cp /etc/kubernetes/admin.conf $HOME/.kube/config'
                     sh 'export IMAGE=$DOCKER_REGISTRY'
                     sh 'envsubst < deployment.yml | kubectl apply -n jenkins -f -'
