@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: REGISTRY:BUILD_NUMBER
+        image: DOCKER_USER/DOCKER_APP:BUILD_NUMBER
         resources:
           requests:
             cpu: 10m
