@@ -56,8 +56,8 @@ pipeline {
                 //    sh 'echo $DOCKER_TOKEN | docker login --username $DOCKER_USER --password-stdin'
                 //    sh 'docker build -t $DOCKER_REGISTRY:$BUILD_NUMBER .'
                 //    sh 'docker push $DOCKER_REGISTRY:$BUILD_NUMBER'
-                    sh 'docker build -t http://127.0.0.1:8080/go_app:$BUILD_NUMER .'
-                    sh 'docker push http://127.0.0.1:8080/go_app:$BUILD_NUMER '
+                    sh 'docker build -t http://127.0.0.1:9090/go_app:$BUILD_NUMBER .'
+                    sh 'docker push http://127.0.0.1:9090/go_app:$BUILD_NUMBER '
                 }
             }
         }
