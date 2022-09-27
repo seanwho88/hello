@@ -56,12 +56,8 @@ pipeline {
                 //    sh 'echo $DOCKER_TOKEN | docker login --username $DOCKER_USER --password-stdin'
                 //    sh 'docker build -t $DOCKER_REGISTRY:$BUILD_NUMBER .'
                 //    sh 'docker push $DOCKER_REGISTRY:$BUILD_NUMBER'
-                    sh 'cat /etc/hosts'
-                    sh 'ip addr'
-                    sh 'curl http://localhost:9090/v2/_catalog'
-                    sh 'curl http://docker-registry:5000/v2/_catalog'
-                    sh 'docker build -t 127.0.0.1:9090/go_app:$BUILD_NUMBER .'
-                    sh 'docker push 127.0.0.1:9090/go_app:$BUILD_NUMBER'
+                    sh 'docker build -t docker-registry:5000/go_app:$BUILD_NUMBER .'
+                    sh 'docker push docker-registry:5000/go_app:$BUILD_NUMBER'
                 }
             }
         }
