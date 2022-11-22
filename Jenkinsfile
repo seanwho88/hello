@@ -4,6 +4,7 @@ pipeline {
         docker_app = "go_server"
         GOCACHE = "/tmp"
         registry = "130.127.132.204"
+        userid = "lngo"
     }
     stages {
         stage('Build') {
@@ -69,9 +70,9 @@ pipeline {
                     sh "sed -i 's/REGISTRY/${registry}/g' deployment.yml"
                     sh "sed -i 's/DOCKER_APP/${docker_app}/g' deployment.yml"
                     sh "sed -i 's/BUILD_NUMBER/${BUILD_NUMBER}/g' deployment.yml"
-                    sh 'scp -r -v -o StrictHostKeyChecking=no *.yml lngo@${registry}:~/'
-                    sh 'ssh -o StrictHostKeyChecking=no lngo@${registry} kubectl apply -f /users/lngo/deployment.yml -n jenkins'
-                    sh 'ssh -o StrictHostKeyChecking=no lngo@${registry} kubectl apply -f /users/lngo/service.yml -n jenkins'                                        
+                    sh 'scp -r -v -o StrictHostKeyChecking=no *.yml ${userid}@${registry}:~/'
+                    sh 'ssh -o StrictHostKeyChecking=no ${userid}@${registry} kubectl apply -f /users/${userid}/deployment.yml -n jenkins'
+                    sh 'ssh -o StrictHostKeyChecking=no ${userid}@${registry} kubectl apply -f /users/${userid}/service.yml -n jenkins'                                        
                 }
             }
         }
