@@ -56,8 +56,9 @@ pipeline {
                 //    sh 'echo $DOCKER_TOKEN | docker login --username $DOCKER_USER --password-stdin'
                 //    sh 'docker build -t $DOCKER_REGISTRY:$BUILD_NUMBER .'
                 //    sh 'docker push $DOCKER_REGISTRY:$BUILD_NUMBER'
-                    sh 'docker build -t 130.127.132.210:31000/go_app:$BUILD_NUMBER .'
-                    sh 'docker push 130.127.132.210:31000/go_app:$BUILD_NUMBER'
+                    sh 'docker login -u admin -p registry https://155.98.37.77:443
+                    sh 'docker build -t 155.98.37.77:443/go_app:$BUILD_NUMBER .'
+                    sh 'docker push 155.98.37.77:443/go_app:$BUILD_NUMBER'
                 }
             }
         }
@@ -69,12 +70,12 @@ pipeline {
             }
             steps {
                 sshagent(credentials: ['cloudlab']) {
-                    sh "sed -i 's/DOCKER_USER/${docker_user}/g' deployment.yml"
+                    //sh "sed -i 's/DOCKER_USER/${docker_user}/g' deployment.yml"
                     sh "sed -i 's/DOCKER_APP/${docker_app}/g' deployment.yml"
                     sh "sed -i 's/BUILD_NUMBER/${BUILD_NUMBER}/g' deployment.yml"
-                    sh 'scp -r -v -o StrictHostKeyChecking=no *.yml lngo@155.98.37.91:~/'
-                    sh 'ssh -o StrictHostKeyChecking=no lngo@155.98.37.91 kubectl apply -f /users/lngo/deployment.yml -n jenkins'
-                    sh 'ssh -o StrictHostKeyChecking=no lngo@155.98.37.91 kubectl apply -f /users/lngo/service.yml -n jenkins'                                        
+                    sh 'scp -r -v -o StrictHostKeyChecking=no *.yml lngo@155.98.37.77:~/'
+                    sh 'ssh -o StrictHostKeyChecking=no lngo@155.98.37.77 kubectl apply -f /users/lngo/deployment.yml -n jenkins'
+                    sh 'ssh -o StrictHostKeyChecking=no lngo@155.98.37.77 kubectl apply -f /users/lngo/service.yml -n jenkins'                                        
                 }
             }
         }
