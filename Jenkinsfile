@@ -56,7 +56,7 @@ pipeline {
                 //    sh 'echo $DOCKER_TOKEN | docker login --username $DOCKER_USER --password-stdin'
                 //    sh 'docker build -t $DOCKER_REGISTRY:$BUILD_NUMBER .'
                 //    sh 'docker push $DOCKER_REGISTRY:$BUILD_NUMBER'
-                    sh 'docker login -u admin -p registry https://155.98.37.77:443
+                    sh 'docker login -u admin -p registry https://155.98.37.77:443'
                     sh 'docker build -t 155.98.37.77:443/go_app:$BUILD_NUMBER .'
                     sh 'docker push 155.98.37.77:443/go_app:$BUILD_NUMBER'
                 }
