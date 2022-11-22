@@ -71,8 +71,8 @@ pipeline {
                     sh "sed -i 's/DOCKER_APP/${docker_app}/g' deployment.yml"
                     sh "sed -i 's/BUILD_NUMBER/${BUILD_NUMBER}/g' deployment.yml"
                     sh 'scp -r -v -o StrictHostKeyChecking=no *.yml ${userid}@${registry}:~/'
-                    sh 'ssh -o StrictHostKeyChecking=no ${userid}@${registry} kubectl apply -f /users/${userid}/deployment.yml -n jenkins'
-                    sh 'ssh -o StrictHostKeyChecking=no ${userid}@${registry} kubectl apply -f /users/${userid}/service.yml -n jenkins'                                        
+                    sh 'ssh -o StrictHostKeyChecking=no ${userid}@${registry} kubectl apply -f /users/${userid}/deployment.yml'
+                    sh 'ssh -o StrictHostKeyChecking=no ${userid}@${registry} kubectl apply -f /users/${userid}/service.yml'                                        
                 }
             }
         }
